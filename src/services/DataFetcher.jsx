@@ -15,12 +15,14 @@ function DataFetcher({ apiEndpoint }) {
     if(!data.sprites.front_shiny){
       setisShiny('This Pokémon has not shiny version.')
     }else{
-      if(imgSrc===data.sprites.front_shiny){
+      if(imgSrc===data.sprites.versions["generation-v"]["black-white"].animated.front_shiny){
         setdoItShiny('Do it Shiny!')
-        setImgSrc(data.sprites.front_default)
+        const frontDefaultSprite = data.sprites.versions["generation-v"]["black-white"].animated.front_default;
+        setImgSrc(frontDefaultSprite)
       }else{
         setdoItShiny('Reverse!')
-        setImgSrc(data.sprites.front_shiny)
+        const frontDefaultSprite = data.sprites.versions["generation-v"]["black-white"].animated.front_shiny;
+        setImgSrc(frontDefaultSprite)
       }
       
     }
@@ -37,8 +39,9 @@ function DataFetcher({ apiEndpoint }) {
           throw new Error('That Pokémon does not exist.');
         }
         const result = await response.json();
+        const frontDefaultSprite = result.sprites.versions["generation-v"]["black-white"].animated.front_default;
         setData(result);
-        setImgSrc(result.sprites.front_default)
+        setImgSrc(frontDefaultSprite)
       } catch (error) {
         setError(error);
       } finally {
